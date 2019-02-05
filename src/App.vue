@@ -1,41 +1,71 @@
 <template>
     <div id="app">
-        <Navigation></Navigation>
-        <div id="nav">
-            <router-link to="/">Home</router-link>
-            |
-            <router-link to="/about">About</router-link>
-        </div>
+        <Navigation />
         <router-view />
+        <Footer />
     </div>
 </template>
 
-<style lang="scss">
-    #app {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
-        color: #2c3e50;
-    }
-
-    #nav {
-        padding: 30px;
-        a {
-            font-weight: bold;
-            color: #2c3e50;
-            &.router-link-exact-active {
-                color: #42b983;
-            }
-        }
-    }
-</style>
 <script>
 import Navigation from './components/Navigation';
+import Footer from './components/Footer';
+import 'bulma-helpers/css/bulma-helpers.min.css';
 
 export default {
+    name      : 'App',
     components: {
-        Navigation
+        Navigation,
+        Footer
     }
 };
 </script>
+
+<style lang="scss">
+@import "assets/scss/variables";
+@import "assets/scss/functions";
+
+    .title {
+        letter-spacing: 3px;
+    }
+
+    .button {
+        &.is-gradient {
+            background: linear-gradient(to right, $red-100, $red-200);
+            color: $red-100;
+            letter-spacing: rem-calc(1.2);
+            border-radius: rem-calc(18);
+            padding: rem-calc(2);
+            border: none;
+
+            span {
+                padding: rem-calc(5 30 6);
+                background: $white;
+                display: block;
+                border-radius: rem-calc(18);
+                transition: background .5s;
+                text-transform: uppercase;
+                font-size: rem-calc(14);
+            }
+
+            &.is-solid {
+                span {
+                    background: transparent;
+                    color: $white;
+
+                    &:hover {
+                        background: $red-100;
+                    }
+                }
+            }
+
+            &:hover {
+
+                span {
+                    background: transparent;
+                    color: $white;
+                }
+            }
+        }
+    }
+
+</style>

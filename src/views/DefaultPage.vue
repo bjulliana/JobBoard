@@ -1,21 +1,19 @@
 <template>
     <div class="home">
-        <HomeHero></HomeHero>
+        <DefaultHero></DefaultHero>
         <div class="columns">
-            <JobList class="column is-8"></JobList>
+            <router-view class="column is-8 has-padding-top-100 has-padding-bottom-100"></router-view>
         </div>
     </div>
 </template>
 
 <script>
-import HomeHero from '../components/HomeHero';
-import JobList from '../components/JobList';
+import DefaultHero from '../components/DefaultHero';
 
 export default {
     name      : 'Home',
     components: {
-        HomeHero,
-        JobList
+        DefaultHero
     }
 };
 </script>
