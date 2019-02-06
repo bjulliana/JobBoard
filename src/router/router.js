@@ -17,15 +17,25 @@ export default new Router({
         {
             path     : '/index',
             component: DefaultPage,
+            props    : true,
             children : [
+                {
+                    path     : 'newcategory',
+                    name     : 'New Category',
+                    component: () => import('../components/CategoryForm.vue'),
+                    props    : true
+                },
                 {
                     path     : 'newjob',
                     name     : 'New Job',
                     component: () => import('../components/JobForm.vue'),
-                    meta     : {
-                        title   : 'Add New Job',
-                        subtitle: 'Fill the Form Below to Add a New Job Posting'
-                    }
+                    props    : true
+                },
+                {
+                    path     : 'job/:id',
+                    name     : 'Job Info',
+                    component: () => import('../components/JobDetail.vue'),
+                    props    : true
                 }
             ]
         }

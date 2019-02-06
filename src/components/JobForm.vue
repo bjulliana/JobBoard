@@ -11,14 +11,16 @@
 
             <b-field grouped>
                 <b-field label="Job Category" expanded>
-                    <b-input name="category" v-model="category" size="is-medium"></b-input>
+                    <b-select name="type" size="is-medium" v-model="category" expanded>
+                        <option v-for="category in categories" :key="category._id" v-bind:value="category._id">{{category.title}}</option>
+                    </b-select>
                 </b-field>
                 <b-field label="Job Type" expanded>
                     <b-select name="type" size="is-medium" v-model="type" expanded>
-                        <option value="flint">Full Time</option>
-                        <option value="flint">Part Time</option>
-                        <option value="flint">Temporary</option>
-                        <option value="flint">Contract</option>
+                        <option>Full Time</option>
+                        <option>Part Time</option>
+                        <option>Temporary</option>
+                        <option>Contract</option>
                     </b-select>
                 </b-field>
             </b-field>
@@ -33,7 +35,8 @@
             </b-field>
 
             <b-field label="Job Description">
-                <b-input name="description" type="textarea" v-model="description"></b-input>
+                <vue-editor v-model="description"></vue-editor>
+                <!--<b-input name="description" type="textarea" v-model="description"></b-input>-->
             </b-field>
 
             <b-field><!-- Label left empty for spacing -->
@@ -51,20 +54,41 @@
 /* eslint-disable */
 import axios from 'axios';
 import storage from '../storage.js';
+import {VueEditor} from 'vue2-editor';
 
 export default {
-    name   : 'JobForm',
+    name      : 'JobForm',
+    components: {
+        VueEditor
+    },
     data() {
         return {
-            title      : '',
-            category   : '',
-            type       : '',
-            city       : '',
-            province   : '',
-            description: ''
+            pageTitle    : 'Add New Job',
+            categories   : [],
+            title        : '',
+            category     : '',
+            type         : '',
+            city         : '',
+            province     : '',
+            description  : ''
         };
     },
-    methods: {
+    created() {
+        this.fetchCategories();
+        this.$emit('title-change', this.pageTitle);
+
+    },
+    methods   : {
+        fetchCategories() {
+            axios.get(`${storage.urlServer}/categories`)
+                 .then(response => {
+                     console.log(response.data);
+                     this.categories = response.data;
+                 })
+                 .catch(e => {
+                     console.log(e);
+                 });
+        },
         addJob() {
             axios.post(`${storage.urlServer}/newjob`, {
                      title      : this.title,
@@ -87,8 +111,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../assets/scss/variables";
-@import "../assets/scss/functions";
+    @import "../assets/scss/variables";
+    @import "../assets/scss/functions";
 
     .job-form {
 
@@ -96,14 +120,20 @@ export default {
 
             input,
             textarea,
+            select,
             .input,
-            .textarea {
+            .textarea,
+            .select {
                 box-shadow: none;
 
                 &.is-medium {
                     font-size: rem-calc(16);
                     height: rem-calc(45);
                 }
+            }
+
+            select {
+                height: rem-calc(45);
             }
         }
 

@@ -23,6 +23,7 @@ module.exports = {
         'one-var'                    : ['off'],
         'no-unused-vars'             : ['off'],
         'no-multi-spaces'            : ['off'],
+        'no-return-assign'           : ['off'],
         'no-console'                 : process.env.NODE_ENV === 'production' ? 'error' : 'off',
         'no-debugger'                : process.env.NODE_ENV === 'production' ? 'error' : 'off'
     },

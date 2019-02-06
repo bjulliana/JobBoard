@@ -1,8 +1,10 @@
 <template>
-        <div class="container has-padding-top-100 has-padding-bottom-100">
-            <h1 class="title has-text-centered has-margin-bottom-80 has-text-weight-light is-uppercase">Recently <span class="has-text-weight-semibold">Posted</span> Jobs</h1>
-            <job-card v-for="job in jobs" :key="job.id" :job="job" class="job-card"></job-card>
-        </div>
+    <div class="container has-padding-top-100 has-padding-bottom-100">
+        <h1 class="title has-text-centered has-margin-bottom-80 has-text-weight-light is-uppercase">Recently <span class="has-text-weight-semibold">Posted</span> Jobs</h1>
+        <router-link v-for="job in jobs" :key="job.id" :to="{ name: 'Job Info', params: {id: job._id, title: job.title}}" class="job-card-wrapper">
+            <job-card :job="job" class="job-card"></job-card>
+        </router-link>
+    </div>
 </template>
 
 <script>
@@ -23,12 +25,10 @@ export default {
     },
     /* eslint-disable */
     created() {
-        // fetch the data when the view is created
         this.fetchData();
     },
     methods   : {
         fetchData() {
-            console.log('ok');
             axios.get(`${storage.urlServer}/jobs`)
                  .then(response => {
                      console.log(response.data);
@@ -42,16 +42,30 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
-@import "../assets/scss/variables";
-@import "../assets/scss/functions";
+<style lang="scss">
+    @import "../assets/scss/variables";
+    @import "../assets/scss/functions";
 
-    .job-card {
-        margin-bottom: rem-calc(20);
+    .job-card-wrapper {
 
-        &:last-child {
-            margin-bottom: 0;
+        .job-card {
+            margin-bottom: rem-calc(20);
+            transition: 0.1s ease-in-out;
+        }
+
+        &:hover {
+            .job-card {
+                transform: scale(1.02);
+
+                .button.is-gradient {
+                    span {
+                        background: transparent;
+                        color: $white;
+                    }
+                }
+            }
+
         }
     }
+
 </style>

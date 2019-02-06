@@ -26,3 +26,16 @@ module.exports.addJob = function (req, res) {
         return res.json(job);
     });
 };
+
+module.exports.getJob = function (req, res) {
+    var data = req.params.id;
+    Job.findOne({_id: data}, function (err, job) {
+        if (err) {
+            return res.status(500).send(err);
+        }
+        if (!job) {
+            return res.status(404).send(err);
+        }
+        return res.json(job);
+    });
+};

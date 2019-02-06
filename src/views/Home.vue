@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <HomeHero></HomeHero>
-        <div class="columns">
+        <div class="main-content columns">
             <JobList class="column is-8"></JobList>
         </div>
     </div>
@@ -20,6 +20,11 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss">
+@import "../assets/scss/variables";
+@import "../assets/scss/functions";
 
+    .main-content {
+        background-color: $white-bis;
+    }
 </style>
