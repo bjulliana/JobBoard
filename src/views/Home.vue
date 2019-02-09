@@ -2,7 +2,7 @@
     <div class="home">
         <HomeHero></HomeHero>
         <div class="main-content columns">
-            <JobList class="column is-8"></JobList>
+            <JobList class="column is-11-mobile is-10-tablet is-8-desktop"></JobList>
         </div>
     </div>
 </template>

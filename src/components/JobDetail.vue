@@ -2,8 +2,52 @@
     <section class="container">
         <div class="columns">
             <div class="column is-full-mobile is-three-fifths-tablet is-two-thirds-desktop">
-                <div>{{job.title}}</div>
+                <h2 class="sub-title is-size-4 has-margin-bottom-30 has-text-weight-light is-uppercase">Job <span class="has-text-weight-semibold">Description</span></h2>
                 <div v-html="job.description"></div>
+                <div class="apply">
+                    <button class="button is-gradient has-margin-top-20" @click="isOpen = !isOpen"><span>Apply</span></button>
+                    <b-collapse :open.sync="isOpen" id="applyForm">
+                        <div class="notification has-margin-top-30">
+                            <div class="content">
+                                <form>
+                                    <b-field grouped>
+                                        <b-field label="Name" expanded>
+                                            <b-input name="name" size="is-medium" v-model="name"></b-input>
+                                        </b-field>
+                                        <b-field label="Email" expanded>
+                                            <b-input type="email" name="email" size="is-medium" v-model="email"></b-input>
+                                        </b-field>
+                                    </b-field>
+
+                                    <b-field label="Message">
+                                        <b-input name="message" type="textarea" v-model="message"></b-input>
+                                    </b-field>
+                                    <b-field class="file">
+                                        <b-upload v-model="file">
+                                            <a class="button is-info">
+                                                <b-icon pack="fas" icon="upload"></b-icon>
+                                                <span>Upload Resume</span>
+                                            </a>
+                                        </b-upload>
+                                        <span class="file-name" v-if="file">
+                                            {{ file.name }}
+                                        </span>
+                                    </b-field>
+                                    <b-field>
+                                        <p class="control has-text-right">
+                                            <a class="button is-gradient has-margin-top-30" @click="submitConfirmation">
+                                                <span>Submit Application</span>
+                                            </a>
+                                        </p>
+                                    </b-field>
+                                </form>
+                                <b-message type="is-success" :active.sync="isActive" class="has-margin-top-30">
+                                    Your Application was submitted.
+                                </b-message>
+                            </div>
+                        </div>
+                    </b-collapse>
+                </div>
             </div>
             <div class="column">
                 <div class="card">
@@ -20,6 +64,9 @@
                             <div class="sidebar-content">
                                 <p class="sidebar-title has-margin-bottom-5">Job Location</p>
                                 <p>{{job.city}}, {{job.province}}</p>
+                            </div>
+                            <div class="sidebar-content has-text-centered">
+                                <a class="button is-gradient has-margin-top-20" @click="isOpen = true" href="#" v-scroll-to="'#applyForm'"><span>Apply</span></a>
                             </div>
                         </div>
                     </div>
@@ -39,6 +86,8 @@ export default {
     data() {
         return {
             job        : [],
+            isOpen     : false,
+            isActive   : false,
             title      : '',
             pageTitle  : '',
             categoryID : '',
@@ -47,6 +96,10 @@ export default {
             city       : '',
             province   : '',
             description: '',
+            name       : '',
+            email      : '',
+            message    : '',
+            file       : null,
             dateCreated: ''
         };
     },
@@ -87,6 +140,13 @@ export default {
                  .catch(e => {
                      console.log(e);
                  });
+        },
+        submitConfirmation() {
+            this.isActive = true;
+            this.name     = '';
+            this.email    = '';
+            this.message  = '';
+            this.file     = null;
         }
     }
 };
@@ -97,6 +157,10 @@ export default {
     @import "../assets/scss/variables";
     @import "../assets/scss/functions";
 
+    .sub-title {
+        letter-spacing: 3px;
+    }
+
     .sidebar-content {
         margin-bottom: rem-calc(30);
 
@@ -104,6 +168,10 @@ export default {
             text-transform: uppercase;
             font-weight: 700;
             color: $red-100;
+        }
+
+        &:last-child {
+            margin-bottom: 0;
         }
     }
 

@@ -21,8 +21,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "assets/scss/variables";
-@import "assets/scss/functions";
+    @import "assets/scss/variables";
+    @import "assets/scss/functions";
 
     .title {
         letter-spacing: 3px;
@@ -63,6 +63,33 @@ export default {
                 span {
                     background: transparent;
                     color: $white;
+                }
+            }
+        }
+    }
+
+    .field {
+
+        .is-medium {
+            input,
+            textarea,
+            select,
+            .input,
+            .textarea,
+            .select {
+                box-shadow: none;
+                font-size: rem-calc(16);
+                height: rem-calc(45);
+                border-radius: 4px;
+            }
+        }
+    }
+
+    form {
+        .field {
+            &.is-grouped {
+                .field + .field {
+                    margin-left: 0;
                 }
             }
         }

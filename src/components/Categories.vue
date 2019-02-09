@@ -1,6 +1,6 @@
 <template>
     <section class="container">
-        <div class="job-form has-margin-bottom-60">
+        <div class="category-form has-margin-bottom-60">
             <form
                 @submit.prevent="addCategory"
                 method="post"
@@ -60,6 +60,7 @@ export default {
             edit        : false,
             title       : '',
             newTitle    : '',
+            file        : null,
             editCategory: [],
             categoryID  : '',
             pageTitle   : 'Categories Manager'
@@ -112,7 +113,13 @@ export default {
     @import "../assets/scss/variables";
     @import "../assets/scss/functions";
 
-    .job-form {
+    .category-form {
+
+        .upload-file {
+            label {
+                display: block;
+            }
+        }
 
         .field {
 

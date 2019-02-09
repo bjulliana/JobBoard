@@ -5,17 +5,18 @@
             method="post"
             enctype="multipart/form-data"
         >
-            <b-field label="Job Title">
-                <b-input name="title" size="is-medium" v-model="title" expanded></b-input>
-            </b-field>
-
-            <b-field grouped>
-                <b-field label="Job Category" expanded>
+            <div class="columns">
+                <b-field label="Job Title" class="column is-12">
+                    <b-input name="title" size="is-medium" v-model="title" expanded></b-input>
+                </b-field>
+            </div>
+            <div class="columns">
+                <b-field label="Job Category" class="column is-full-mobile is-half-tablet" expanded>
                     <b-select name="type" size="is-medium" v-model="category" expanded>
                         <option v-for="category in categories" :key="category._id" v-bind:value="category._id">{{category.title}}</option>
                     </b-select>
                 </b-field>
-                <b-field label="Job Type" expanded>
+                <b-field label="Job Type" class="column is-full-mobile is-half-tablet" expanded>
                     <b-select name="type" size="is-medium" v-model="type" expanded>
                         <option>Full Time</option>
                         <option>Part Time</option>
@@ -23,16 +24,16 @@
                         <option>Contract</option>
                     </b-select>
                 </b-field>
-            </b-field>
+            </div>
 
-            <b-field grouped>
-                <b-field label="City" expanded>
+            <div class="columns">
+                <b-field label="City" class="column is-full-mobile is-half-tablet" expanded>
                     <b-input name="city" size="is-medium" v-model="city"></b-input>
                 </b-field>
-                <b-field label="Province" expanded>
+                <b-field label="Province" class="column is-full-mobile is-half-tablet" expanded>
                     <b-input name="province" size="is-medium" v-model="province"></b-input>
                 </b-field>
-            </b-field>
+            </div>
 
             <b-field label="Job Description">
                 <vue-editor v-model="description"></vue-editor>
@@ -63,14 +64,14 @@ export default {
     },
     data() {
         return {
-            pageTitle    : 'Add New Job',
-            categories   : [],
-            title        : '',
-            category     : '',
-            type         : '',
-            city         : '',
-            province     : '',
-            description  : ''
+            pageTitle  : 'Add New Job',
+            categories : [],
+            title      : '',
+            category   : '',
+            type       : '',
+            city       : '',
+            province   : '',
+            description: ''
         };
     },
     created() {
@@ -113,30 +114,5 @@ export default {
 <style lang="scss">
     @import "../assets/scss/variables";
     @import "../assets/scss/functions";
-
-    .job-form {
-
-        .field {
-
-            input,
-            textarea,
-            select,
-            .input,
-            .textarea,
-            .select {
-                box-shadow: none;
-
-                &.is-medium {
-                    font-size: rem-calc(16);
-                    height: rem-calc(45);
-                }
-            }
-
-            select {
-                height: rem-calc(45);
-            }
-        }
-
-    }
 
 </style>

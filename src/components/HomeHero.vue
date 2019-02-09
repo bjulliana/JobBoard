@@ -1,7 +1,7 @@
 <template>
     <section class="hero is-light is-medium has-bg-img">
         <div class="hero-body columns">
-            <div class="container column is-6">
+            <div class="container column is-11-mobile is-10-tablet is-8-desktop">
                 <h1 class="title has-text-centered is-uppercase has-text-dark has-text-weight-light">
                     Find the <span class="has-text-weight-semibold">Perfect</span> Job
                 </h1>
