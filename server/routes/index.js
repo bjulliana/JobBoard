@@ -1,7 +1,7 @@
-var express            = require('express');
-var router             = express.Router();
-var jobController      = require('../controllers/jobController');
-var categoryController = require('../controllers/CategoryController');
+let express            = require('express');
+let router             = express.Router();
+let jobController      = require('../controllers/jobController');
+let categoryController = require('../controllers/CategoryController');
 
 /* GET home page. */
 router.get('/', function (req, res) {
@@ -11,13 +11,15 @@ router.get('/', function (req, res) {
 //Jobs Routes
 router.get('/jobs', jobController.getJobs);
 router.get('/job/:id', jobController.getJob);
-router.post('/newjob', jobController.addJob);
+router.post('/job/new', jobController.addJob);
 //router.put('/post', postController.updatePost);
 //router.delete('/post/:id', postController.deletePost);
 
 //Categories Routes
 router.get('/categories', categoryController.getCategories);
 router.get('/category/:id', categoryController.getCategory);
-router.post('/newcategory', categoryController.addCategories);
+router.post('/category/new', categoryController.addCategories);
+router.put('/category', categoryController.updateCategory);
+router.delete('/category/:id', categoryController.deleteCategory);
 
 module.exports = router;

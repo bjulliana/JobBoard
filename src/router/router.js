@@ -15,24 +15,24 @@ export default new Router({
             component: Home
         },
         {
-            path     : '/index',
+            path     : '',
             component: DefaultPage,
             props    : true,
             children : [
                 {
-                    path     : 'newcategory',
+                    path     : '/categories',
                     name     : 'New Category',
-                    component: () => import('../components/CategoryForm.vue'),
+                    component: () => import('../components/Categories.vue'),
                     props    : true
                 },
                 {
-                    path     : 'newjob',
+                    path     : '/newjob',
                     name     : 'New Job',
                     component: () => import('../components/JobForm.vue'),
                     props    : true
                 },
                 {
-                    path     : 'job/:id',
+                    path     : '/job/:id',
                     name     : 'Job Info',
                     component: () => import('../components/JobDetail.vue'),
                     props    : true

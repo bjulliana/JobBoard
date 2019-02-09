@@ -1,12 +1,31 @@
 <template>
     <section class="container">
-        <div>{{job.title}}</div>
-        <div>{{category.title}}</div>
-        <div>{{job.type}}</div>
-        <div>{{job.city}}</div>
-        <div>{{job.province}}</div>
-        <div v-html="job.description"></div>
-
+        <div class="columns">
+            <div class="column is-full-mobile is-three-fifths-tablet is-two-thirds-desktop">
+                <div>{{job.title}}</div>
+                <div v-html="job.description"></div>
+            </div>
+            <div class="column">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="content">
+                            <div class="sidebar-content">
+                                <p class="sidebar-title has-margin-bottom-5">Job Category</p>
+                                <p>{{category.title}}</p>
+                            </div>
+                            <div class="sidebar-content">
+                                <p class="sidebar-title has-margin-bottom-5">Job Type</p>
+                                <p>{{job.type}}</p>
+                            </div>
+                            <div class="sidebar-content">
+                                <p class="sidebar-title has-margin-bottom-5">Job Location</p>
+                                <p>{{job.city}}, {{job.province}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 </template>
 
@@ -77,5 +96,15 @@ export default {
 <style lang="scss">
     @import "../assets/scss/variables";
     @import "../assets/scss/functions";
+
+    .sidebar-content {
+        margin-bottom: rem-calc(30);
+
+        .sidebar-title {
+            text-transform: uppercase;
+            font-weight: 700;
+            color: $red-100;
+        }
+    }
 
 </style>

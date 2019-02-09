@@ -11,9 +11,7 @@ let createError  = require('http-errors'),
     http         = require('http'),
     app          = express(),
     server       = app.listen(3000),
-    index        = require('./routes/index'),
-    multer       = require('multer'),
-    upload       = multer({dest: 'uploads/'});
+    index        = require('./routes/index');
 
 mongoose.connect('mongodb://jobuser:job1q2w@ds115963.mlab.com:15963/job_board', {useNewUrlParser: true},
     () => {

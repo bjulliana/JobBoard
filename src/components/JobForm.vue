@@ -90,7 +90,7 @@ export default {
                  });
         },
         addJob() {
-            axios.post(`${storage.urlServer}/newjob`, {
+            axios.post(`${storage.urlServer}/job/new`, {
                      title      : this.title,
                      category   : this.category,
                      type       : this.type,
