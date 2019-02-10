@@ -28,10 +28,32 @@
                     <div class="navbar-item">
                         <div class="field is-grouped">
                             <p class="control">
-                                <router-link class="button is-gradient" :to="{ name: 'New Job', params: {title: 'Add New Job', subtitle: 'Fill the Form Below to Add a New Job'}}"><span>Post Job</span></router-link>
+                                <router-link v-if="!userLoggedIn" class="button is-gradient" :to="{ name: 'Login'}"><span>Login</span></router-link>
+                                <router-link v-if="userLoggedIn" class="button is-gradient has-margin-right-20" :to="{ name: 'New Job'}"><span>Post Job</span></router-link>
                             </p>
                         </div>
                     </div>
+                    <b-dropdown v-if="userLoggedIn" position="is-bottom-left">
+                        <a class="navbar-item" slot="trigger">
+                            <span class="has-margin-right-5">{{user.first_name}} {{user.last_name}}</span>
+                            <b-icon icon="chevron-down"></b-icon>
+                        </a>
+
+                        <b-dropdown-item value="categories" has-link>
+                            <router-link :to="{ name: 'Categories'}"><b-icon icon="book-outline" class="has-margin-right-5"></b-icon>
+                            Categories
+                            </router-link>
+                        </b-dropdown-item>
+                        <hr class="dropdown-divider">
+                        <b-dropdown-item value="profile" custom>
+                            <b-icon icon="account-outline" class="has-margin-right-5"></b-icon>
+                            Profile
+                        </b-dropdown-item>
+                        <b-dropdown-item value="logout" href="#" @click="logOut">
+                            <b-icon icon="logout" class="has-margin-right-5"></b-icon>
+                            Logout
+                        </b-dropdown-item>
+                    </b-dropdown>
                 </div>
             </div>
         </nav>
@@ -39,14 +61,49 @@
 </template>
 
 <script>
+import EventBus from '../event-bus.js';
+import storage from '../storage.js';
+import axios from 'axios';
+
+/* eslint-disable */
 export default {
-    name: 'Navigation'
+    name   : 'Navigation',
+    data() {
+        return {
+            userLoggedIn: !!storage.sessionId,
+            user        : []
+        };
+    },
+    created() {
+        EventBus.$on('setUserStatus', this.setUserStatus);
+        EventBus.$on('userData', data => {
+            console.log(data);
+            this.user = data;
+        });
+    },
+    methods: {
+        setUserStatus(user) {
+            this.userLoggedIn = !!storage.sessionId;
+            this.user         = storage.userId;
+        },
+        logOut() {
+            axios.get(`${storage.urlServer}/logout`)
+                 .then(() => {
+                     window.localStorage.clear();
+                     EventBus.$emit('setUserStatus');
+                     this.$router.push({name: 'Home'});
+                 })
+                 .catch(function (err) {
+                     console.log(err);
+                 });
+        }
+    }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/scss/variables";
-@import "../assets/scss/functions";
+    @import "../assets/scss/variables";
+    @import "../assets/scss/functions";
 
     .container-header {
         padding: rem-calc(10 0);

@@ -10,12 +10,37 @@
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import 'bulma-helpers/css/bulma-helpers.min.css';
+import storage from './storage.js';
+import EventBus from './event-bus.js';
+import axios from 'axios';
 
+/* eslint-disable */
 export default {
     name      : 'App',
     components: {
         Navigation,
         Footer
+    },
+    created() {
+        EventBus.$on('setUserStatus', this.setUserStatus);
+        if (storage.userId) {
+            this.fetchUser();
+        }
+    },
+    methods   : {
+        setUserStatus() {
+            storage.sessionId = localStorage.getItem('sessionId') || null;
+            storage.userId    = localStorage.getItem('userId') || null;
+        },
+        fetchUser() {
+            axios.get(`${storage.urlServer}/user/${storage.userId}`)
+                 .then(response => {
+                     EventBus.$emit('userData', response.data);
+                 })
+                 .catch(e => {
+                     console.log(e);
+                 });
+        }
     }
 };
 </script>

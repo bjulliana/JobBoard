@@ -31,7 +31,6 @@ export default {
         fetchData() {
             axios.get(`${storage.urlServer}/jobs`)
                  .then(response => {
-                     console.log(response.data);
                      this.jobs = response.data;
                  })
                  .catch(e => {

@@ -20,8 +20,20 @@ export default new Router({
             props    : true,
             children : [
                 {
+                    path     : '/register',
+                    name     : 'Register',
+                    component: () => import('../components/Register.vue'),
+                    props    : true
+                },
+                {
+                    path     : '/login',
+                    name     : 'Login',
+                    component: () => import('../components/Login.vue'),
+                    props    : true
+                },
+                {
                     path     : '/categories',
-                    name     : 'New Category',
+                    name     : 'Categories',
                     component: () => import('../components/Categories.vue'),
                     props    : true
                 },

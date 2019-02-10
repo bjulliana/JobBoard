@@ -10,9 +10,9 @@ module.exports.getCategories = function (req, res) {
 };
 
 module.exports.addCategories = function (req, res) {
-    let data = req.body;
+    let data        = req.body;
     let newCategory = new Category({
-        title: data.title,
+        title: data.title
     });
     newCategory.save(function (err, category) {
         if (err) {
