@@ -6,7 +6,7 @@ module.exports.getJobs = function (req, res) {
             return res.json(err);
         }
         return res.json(jobs);
-    });
+    }).populate('category');
 };
 
 module.exports.getJobsbyCategory = function (req, res) {

@@ -41,7 +41,13 @@
                         <b-dropdown-item value="categories" has-link>
                             <router-link :to="{ name: 'Categories'}">
                                 <b-icon icon="book-outline" class="has-margin-right-5"></b-icon>
-                                Categories
+                                Manage Categories
+                            </router-link>
+                        </b-dropdown-item>
+                        <b-dropdown-item value="categories" has-link>
+                            <router-link :to="{ name: 'Jobs'}">
+                                <b-icon icon="briefcase-outline" class="has-margin-right-5"></b-icon>
+                                Manage Jobs
                             </router-link>
                         </b-dropdown-item>
                         <hr class="dropdown-divider">
@@ -75,11 +81,11 @@ export default {
         };
     },
     created() {
-        EventBus.$on('setUserStatus', this.setUserStatus);
         EventBus.$on('userData', data => {
             console.log(data);
             this.user = data;
         });
+        EventBus.$on('setUserStatus', this.setUserStatus);
     },
     methods: {
         setUserStatus(user) {

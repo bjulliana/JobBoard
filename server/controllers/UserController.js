@@ -30,7 +30,6 @@ module.exports.loginUser = function (req, res, next) {
 
         req.login(user, err => {
             res.send({
-                message: 'Logged in',
                 login  : true,
                 session: req.session,
                 cookie : req.cookies,

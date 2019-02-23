@@ -55,7 +55,6 @@ export default {
                     {withCredentials: true}
                      )
                      .then(response => {
-                         console.log('Logged in');
                          let data  = response.data;
                          let token = data.cookie.sid;
                          localStorage.setItem('sessionId', token);

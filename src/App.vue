@@ -22,10 +22,10 @@ export default {
         Footer
     },
     created() {
-        EventBus.$on('setUserStatus', this.setUserStatus);
         if (storage.userId) {
             this.fetchUser();
         }
+        EventBus.$on('setUserStatus', this.setUserStatus);
     },
     methods   : {
         setUserStatus() {

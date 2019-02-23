@@ -5,7 +5,10 @@ import DefaultPage from '../views/DefaultPage.vue';
 
 Vue.use(Router);
 
-export default new Router({
+const accessToken = localStorage.getItem('sessionId');
+const accessUser  = localStorage.getItem('userId');
+
+const router = new Router({
     mode  : 'history',
     base  : process.env.BASE_URL,
     routes: [
@@ -38,12 +41,20 @@ export default new Router({
                 {
                     path     : '/categories',
                     name     : 'Categories',
-                    component: () => import('../components/Categories.vue')
+                    component: () => import('../components/Categories.vue'),
+                    meta     : {requiresAuth: true}
+                },
+                {
+                    path     : '/jobs',
+                    name     : 'Jobs',
+                    component: () => import('../components/JobsTable.vue'),
+                    meta     : {requiresAuth: true}
                 },
                 {
                     path     : '/newjob',
                     name     : 'New Job',
-                    component: () => import('../components/JobForm.vue')
+                    component: () => import('../components/JobForm.vue'),
+                    meta     : {requiresAuth: true}
                 },
                 {
                     path     : '/job/:id',
@@ -59,3 +70,22 @@ export default new Router({
         }
     ]
 });
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (!accessToken || !accessUser) {
+            next({
+                path : '/login',
+                query: {
+                    redirect: to.fullPath
+                }
+            });
+        } else {
+            next();
+        }
+    } else {
+        next();
+    }
+});
+
+export default router;
