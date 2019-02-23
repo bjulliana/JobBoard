@@ -3,7 +3,8 @@
         <b-table
             :data="jobs"
             :hoverable="isHoverable"
-            :mobile-cards="hasMobileCards">
+            :mobile-cards="hasMobileCards"
+            :loading="isLoading">
 
             <template slot-scope="props">
 
@@ -20,11 +21,11 @@
                 </b-table-column>
 
                 <b-table-column field="action" label="Actions">
-                    <a class="button is-info is-outlined has-margin-right-20" @click="editJob(props.row)">
+                    <router-link class="button is-info is-outlined has-margin-right-20" :to="{ name: 'Edit Job', params: {id: props.row._id, title: props.row.title}}">
                         <span class="icon is-small">
                             <i class="fas fa-pencil-alt"></i>
                         </span>
-                    </a>
+                    </router-link>
                     <a class="button is-danger is-outlined" @click="deleteJob(props.row._id)">
                         <span class="icon is-small">
                             <i class="far fa-trash-alt"></i>
@@ -65,7 +66,8 @@ export default {
             jobs          : [],
             isHoverable   : true,
             hasMobileCards: true,
-            pageTitle     : 'Jobs Manager'
+            pageTitle     : 'Jobs Manager',
+            isLoading     : true
         };
     },
     created() {
@@ -76,8 +78,9 @@ export default {
         fetchJobs() {
             axios.get(`${storage.urlServer}/jobs`)
                  .then(response => {
-                     this.jobs    = response.data;
-                     this.results = response.data.length;
+                     this.jobs      = response.data;
+                     this.results   = response.data.length;
+                     this.isLoading = false;
                  })
                  .catch(e => {
                      console.log(e);
@@ -100,25 +103,25 @@ export default {
             return newDate;
         },
         editJob(item) {
-            //EventBus.$emit('edit-category', item);
+            EventBus.$emit('edit-job', item);
         },
         deleteJob(id) {
-            //this.$dialog.confirm({
-            //    title      : 'Delete Category',
-            //    message    : 'Are you sure you want to <b>delete</b> this category? This action cannot be undone.',
-            //    confirmText: 'Delete Category',
-            //    type       : 'is-danger',
-            //    hasIcon    : true,
-            //    onConfirm  : () => {
-            //        axios.delete(`${storage.urlServer}/category/${id}`)
-            //             .then(() => {
-            //                 this.fetchCategories();
-            //             })
-            //             .catch(e => {
-            //                 console.log(e);
-            //             });
-            //    }
-            //});
+            this.$dialog.confirm({
+                title      : 'Delete Job',
+                message    : 'Are you sure you want to <b>delete</b> this job? This action cannot be undone.',
+                confirmText: 'Delete Job',
+                type       : 'is-danger',
+                hasIcon    : true,
+                onConfirm  : () => {
+                    axios.delete(`${storage.urlServer}/job/${id}`)
+                         .then(() => {
+                             this.fetchJobs();
+                         })
+                         .catch(e => {
+                             console.log(e);
+                         });
+                }
+            });
         }
     }
 };

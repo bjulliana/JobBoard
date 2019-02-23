@@ -10,13 +10,11 @@
                         <div class="notification has-margin-top-30">
                             <div class="content">
                                 <form>
-                                    <b-field grouped>
-                                        <b-field label="Name" expanded>
-                                            <b-input name="name" size="is-medium" v-model="name"></b-input>
-                                        </b-field>
-                                        <b-field label="Email" expanded>
-                                            <b-input type="email" name="email" size="is-medium" v-model="email"></b-input>
-                                        </b-field>
+                                    <b-field label="Name" expanded>
+                                        <b-input name="name" size="is-medium" v-model="name"></b-input>
+                                    </b-field>
+                                    <b-field label="Email" expanded>
+                                        <b-input type="email" name="email" size="is-medium" v-model="email"></b-input>
                                     </b-field>
 
                                     <b-field label="Message">
@@ -53,6 +51,10 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="content">
+                            <div class="sidebar-content">
+                                <p class="sidebar-title has-margin-bottom-5">Date Posted</p>
+                                <p>{{ updateDate(job.createdAt) }}</p>
+                            </div>
                             <div class="sidebar-content">
                                 <p class="sidebar-title has-margin-bottom-5">Job Category</p>
                                 <p>{{category.title}}</p>
@@ -131,6 +133,22 @@ export default {
         },
         updateTitle() {
             this.$emit('title-change', this.job.title);
+        },
+        updateDate(date) {
+            let newDate = new Date(date);
+            let dd      = newDate.getDate();
+            let mm      = newDate.getMonth() + 1; //January is 0!
+
+            let yyyy = newDate.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            newDate = dd + '/' + mm + '/' + yyyy;
+
+            return newDate;
         },
         getCategory() {
             axios.get(`${storage.urlServer}/category/${this.categoryID}`)

@@ -57,6 +57,12 @@ const router = new Router({
                     meta     : {requiresAuth: true}
                 },
                 {
+                    path     : '/edit/:id',
+                    name     : 'Edit Job',
+                    component: () => import('../components/JobForm.vue'),
+                    meta     : {requiresAuth: true}
+                },
+                {
                     path     : '/job/:id',
                     name     : 'Job Info',
                     component: () => import('../components/JobDetail.vue')

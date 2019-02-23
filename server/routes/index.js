@@ -29,16 +29,16 @@ router.post('/register', userController.addUser);
 router.get('/jobs', jobController.getJobs);
 router.get('/jobs/category/:id', jobController.getJobsbyCategory);
 router.get('/job/:id', jobController.getJob);
-router.post('/job/new', authMiddleware, jobController.addJob);
+router.post('/job/new', jobController.addJob);
 router.get('/search/:search', jobController.searchJob);
-//router.put('/job', jobController.updateJob);
-//router.delete('/job/:id', jobController.deleteJob);
+router.put('/job', jobController.updateJob);
+router.delete('/job/:id', jobController.deleteJob);
 
 //Categories Routes
 router.get('/categories', categoryController.getCategories);
 router.get('/category/:id', categoryController.getCategory);
-router.post('/category/new', authMiddleware, categoryController.addCategories);
-router.put('/category', authMiddleware, categoryController.updateCategory);
-router.delete('/category/:id', authMiddleware, categoryController.deleteCategory);
+router.post('/category/new', categoryController.addCategories);
+router.put('/category', categoryController.updateCategory);
+router.delete('/category/:id', categoryController.deleteCategory);
 
 module.exports = router;

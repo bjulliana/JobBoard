@@ -62,6 +62,48 @@ module.exports.searchJob = function (req, res) {
     });
 };
 
+module.exports.deleteJob = function (req, res) {
+    let data = req.params.id;
+    Job.findOne({_id: data}, function (err, job) {
+        if (err) {
+            return res.status(500).send(err);
+        }
+        if (!job) {
+            return res.status(404).send(err);
+        }
+        job.remove(function (err) {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            return res.json(200);
+        });
+    });
+};
+
+module.exports.updateJob = function (req, res) {
+    let data = req.body;
+    Job.findOne({_id: data._id}, function (err, job) {
+        if (err) {
+            return res.status(500).send(err);
+        }
+        if (!job) {
+            return res.status(404).send(err);
+        }
+        job.title       = data.title;
+        job.category    = data.category;
+        job.type        = data.type;
+        job.city        = data.city;
+        job.province    = data.province;
+        job.description = data.description;
+        job.save(function (err) {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            return res.json(200);
+        });
+    });
+};
+
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
 }

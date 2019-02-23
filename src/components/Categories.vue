@@ -74,8 +74,6 @@ export default {
             this.edit         = true;
             this.editCategory = item;
             this.newTitle     = item.title;
-            //this.categoryID = item._id;
-            //console.log(item);
         });
     },
     methods   : {
