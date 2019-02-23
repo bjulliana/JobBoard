@@ -15,6 +15,12 @@ export default new Router({
             component: Home
         },
         {
+            name     : 'Search',
+            path     : '/search',
+            component: Home,
+            props    : route => ({query: route.query.q})
+        },
+        {
             path     : '',
             component: DefaultPage,
             props    : true,
@@ -22,32 +28,32 @@ export default new Router({
                 {
                     path     : '/register',
                     name     : 'Register',
-                    component: () => import('../components/Register.vue'),
-                    props    : true
+                    component: () => import('../components/Register.vue')
                 },
                 {
                     path     : '/login',
                     name     : 'Login',
-                    component: () => import('../components/Login.vue'),
-                    props    : true
+                    component: () => import('../components/Login.vue')
                 },
                 {
                     path     : '/categories',
                     name     : 'Categories',
-                    component: () => import('../components/Categories.vue'),
-                    props    : true
+                    component: () => import('../components/Categories.vue')
                 },
                 {
                     path     : '/newjob',
                     name     : 'New Job',
-                    component: () => import('../components/JobForm.vue'),
-                    props    : true
+                    component: () => import('../components/JobForm.vue')
                 },
                 {
                     path     : '/job/:id',
                     name     : 'Job Info',
-                    component: () => import('../components/JobDetail.vue'),
-                    props    : true
+                    component: () => import('../components/JobDetail.vue')
+                },
+                {
+                    path     : '/category/:id',
+                    name     : 'Category List',
+                    component: () => import('../components/JobList.vue')
                 }
             ]
         }

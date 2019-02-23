@@ -49,6 +49,12 @@ export default {
     @import "assets/scss/variables";
     @import "assets/scss/functions";
 
+
+    .columns.columns {
+        margin-right: 0;
+        margin-left: 0;
+    }
+
     .title {
         letter-spacing: 3px;
     }

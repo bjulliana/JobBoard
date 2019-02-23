@@ -38,10 +38,10 @@
                             <span class="has-margin-right-5">{{user.first_name}} {{user.last_name}}</span>
                             <b-icon icon="chevron-down"></b-icon>
                         </a>
-
                         <b-dropdown-item value="categories" has-link>
-                            <router-link :to="{ name: 'Categories'}"><b-icon icon="book-outline" class="has-margin-right-5"></b-icon>
-                            Categories
+                            <router-link :to="{ name: 'Categories'}">
+                                <b-icon icon="book-outline" class="has-margin-right-5"></b-icon>
+                                Categories
                             </router-link>
                         </b-dropdown-item>
                         <hr class="dropdown-divider">
@@ -101,12 +101,19 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
     @import "../assets/scss/variables";
     @import "../assets/scss/functions";
 
-    .container-header {
-        padding: rem-calc(10 0);
+    .dropdown {
+
+        .dropdown-menu {
+            padding-top: 0;
+
+            .dropdown-content {
+                border-radius: 0;
+            }
+        }
     }
 
 </style>

@@ -29,6 +29,7 @@ router.post('/register', userController.addUser);
 router.get('/jobs', jobController.getJobs);
 router.get('/job/:id', jobController.getJob);
 router.post('/job/new', jobController.addJob);
+router.get('/search/:search', jobController.searchJob);
 //router.put('/post', postController.updatePost);
 //router.delete('/post/:id', postController.deletePost);
 

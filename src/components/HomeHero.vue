@@ -1,5 +1,5 @@
 <template>
-    <section class="hero is-light is-medium has-bg-img">
+    <section class="hero is-light is-medium has-bg-img" :style="{ backgroundImage: `url('${bgImage}')`}">
         <div class="hero-body columns">
             <div class="container column is-11-mobile is-10-tablet is-8-desktop">
                 <h1 class="title has-text-centered is-uppercase has-text-dark has-text-weight-light">
@@ -7,6 +7,7 @@
                 </h1>
                 <b-field class="search">
                     <b-input placeholder="Search..."
+                             v-model="search"
                              type="search"
                              icon="magnify"
                              size="is-large"
@@ -21,7 +22,36 @@
 
 <script>
 export default {
-    name: 'HomeHero'
+    name : 'HomeHero',
+    props: {
+        query: {
+            type   : String,
+            default: ''
+        }
+    },
+    data() {
+        return {
+            search            : null,
+            bgImage: '/images/hero-default.jpg'
+        };
+    },
+    watch: {
+        search(val) {
+            if (val !== null) {
+                if (val.length !== 0) {
+                    console.log(val);
+                    this.$router.push({
+                        name : 'Search',
+                        query: {q: val}
+                    });
+                } else if (val.length === 0) {
+                    this.$router.push({
+                        path: '/'
+                    });
+                }
+            }
+        }
+    }
 };
 </script>
 
@@ -29,8 +59,8 @@ export default {
 <style lang="scss">
 
     .has-bg-img {
-        background: url('../assets/images/blank-business-composition-373076.jpg') center center;
         background-size: cover;
+        background-position: center;
     }
 
     .search {

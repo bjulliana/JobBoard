@@ -3,7 +3,7 @@
         <div class="columns">
             <div class="column is-full-mobile is-three-fifths-tablet is-two-thirds-desktop">
                 <h2 class="sub-title is-size-4 has-margin-bottom-30 has-text-weight-light is-uppercase">Job <span class="has-text-weight-semibold">Description</span></h2>
-                <div v-html="job.description"></div>
+                <div class="job-description" v-html="job.description"></div>
                 <div class="apply">
                     <button class="button is-gradient has-margin-top-20" @click="isOpen = !isOpen"><span>Apply</span></button>
                     <b-collapse :open.sync="isOpen" id="applyForm">
@@ -49,7 +49,7 @@
                     </b-collapse>
                 </div>
             </div>
-            <div class="column">
+            <div class="column is-hidden-mobile">
                 <div class="card">
                     <div class="card-content">
                         <div class="content">
@@ -172,6 +172,22 @@ export default {
 
         &:last-child {
             margin-bottom: 0;
+        }
+    }
+
+    .job-description {
+        p {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        ul {
+            list-style: disc;
+            margin-left: 18px;
+
+            li {
+                margin-bottom: 10px;
+            }
         }
     }
 

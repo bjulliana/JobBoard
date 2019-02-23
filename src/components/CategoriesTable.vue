@@ -7,7 +7,7 @@
 
             <template slot-scope="props">
                 <b-table-column field="image" label="Image" centered>
-                    <img src="https://picsum.photos/50/50">
+                    <img class="category-image" :src="`/images/categories/${props.row._id}.svg`">
                 </b-table-column>
 
                 <b-table-column field="id" label="ID">
@@ -63,7 +63,8 @@ export default {
             edit          : false,
             categories    : [],
             isHoverable   : true,
-            hasMobileCards: true
+            hasMobileCards: true,
+            image         : true
         };
     },
     created() {
@@ -116,5 +117,9 @@ export default {
 <style lang="scss">
     @import "../assets/scss/variables";
     @import "../assets/scss/functions";
+
+    .category-image {
+        max-width: rem-calc(50);
+    }
 
 </style>

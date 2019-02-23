@@ -39,3 +39,20 @@ module.exports.getJob = function (req, res) {
         return res.json(job);
     });
 };
+
+module.exports.searchJob = function (req, res) {
+    let src     = req.params.search;
+    const regex = new RegExp(escapeRegex(src), 'gi');
+
+    Job.find({title: regex}, function (err, jobs) {
+        if (err) {
+            return res.json(err);
+        } else {
+            return res.json(jobs);
+        }
+    });
+};
+
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+}
