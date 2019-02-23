@@ -1,9 +1,14 @@
 <template>
     <div class="container has-padding-top-100 has-padding-bottom-100">
-        <h1 class="title has-text-centered has-margin-bottom-80 has-text-weight-light is-uppercase">Recently <span class="has-text-weight-semibold">Posted</span> Jobs</h1>
-        <router-link v-for="job in jobs" :key="job.id" :to="{ name: 'Job Info', params: {id: job._id, title: job.title}}" class="job-card-wrapper">
-            <job-card :job="job" class="job-card"></job-card>
-        </router-link>
+        <h1 class="title has-text-centered has-margin-bottom-80 has-text-weight-light is-uppercase"><span class="has-text-weight-semibold">{{category.title}} </span>Jobs</h1>
+        <div v-if="jobsQnt > 0">
+            <router-link v-for="job in jobs" :key="job.id" :to="{ name: 'Job Info', params: {id: job._id, title: job.title}}" class="job-card-wrapper">
+                <job-card :job="job" :category="category" class="job-card"></job-card>
+            </router-link>
+        </div>
+        <div v-else>
+            <p class="has-text-centered is-italic">No Jobs in this category</p>
+        </div>
     </div>
 </template>
 
@@ -19,19 +24,41 @@ export default {
     },
     data() {
         return {
-            jobs   : [],
-            jobsQnt: null
+            jobs      : [],
+            jobsQnt   : null,
+            categoryID: '',
+            category  : []
         };
     },
     /* eslint-disable */
     created() {
         this.fetchData();
     },
+    computed  : {
+        request() {
+            if (this.$route.name === 'Category List') {
+                this.categoryID = this.$route.params.id;
+                return `${storage.urlServer}/jobs/category/${this.categoryID}`;
+            }
+        }
+    },
     methods   : {
         fetchData() {
-            axios.get(`${storage.urlServer}/jobs`)
+            axios.get(this.request)
                  .then(response => {
-                     this.jobs = response.data;
+                     console.log(response.data);
+                     this.jobs    = response.data;
+                     this.jobsQnt = response.data.length;
+                     this.getCategory();
+                 })
+                 .catch(e => {
+                     console.log(e);
+                 });
+        },
+        getCategory() {
+            axios.get(`${storage.urlServer}/category/${this.categoryID}`)
+                 .then(response => {
+                     this.category = response.data;
                  })
                  .catch(e => {
                      console.log(e);

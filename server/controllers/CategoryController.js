@@ -32,7 +32,7 @@ module.exports.getCategory = function (req, res) {
             return res.status(404).send(err);
         }
         return res.json(category);
-    });
+    }).populate('jobs');
 };
 
 module.exports.deleteCategory = function (req, res) {

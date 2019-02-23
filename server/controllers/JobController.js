@@ -9,6 +9,15 @@ module.exports.getJobs = function (req, res) {
     });
 };
 
+module.exports.getJobsbyCategory = function (req, res) {
+    Job.find({category: req.params.id}, function (err, jobs) {
+        if (err) {
+            return res.json(err);
+        }
+        return res.json(jobs);
+    });
+};
+
 module.exports.addJob = function (req, res) {
     let data   = req.body;
     let newJob = new Job({

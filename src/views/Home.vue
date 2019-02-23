@@ -3,11 +3,14 @@
         <HomeHero></HomeHero>
         <div class="columns justify-center has-background-white">
             <div class="column is-12-mobile is-10-tablet is-8-desktop">
-                <div class="columns has-padding-top-100 has-padding-bottom-100 category-cards-wrapper" v-if="!['Search'].includes($route.name)">
-                    <router-link v-for="category in categories" :key="category.id" :to="{ name: 'Category List', params: {id: category._id, title: category.title}}">
-                        <categories-card :category="category" class="category-card"></categories-card>
-                    </router-link>
-                </div>
+                <carousel class="columns has-padding-top-100 has-padding-bottom-100 category-cards-wrapper" v-if="!['Search'].includes($route.name)"
+                          :scrollPerPage="true" :perPageCustom="[[0, 1], [480, 3], [768, 4], [1152, 5]]">
+                    <slide v-for="category in categories" :key="category.id">
+                        <router-link :to="{ name: 'Category List', params: {id: category._id, title: category.title}}" class="categoy-card-link">
+                            <categories-card :category="category" class="category-card"></categories-card>
+                        </router-link>
+                    </slide>
+                </carousel>
             </div>
         </div>
         <div class="main-content columns justify-center">
@@ -31,13 +34,16 @@ import axios from 'axios';
 import JobCard from '../components/JobCard';
 import storage from '../storage.js';
 import CategoriesCard from '../components/CategoriesCard';
+import {Carousel, Slide} from 'vue-carousel';
 
 export default {
     name      : 'Home',
     components: {
         HomeHero,
         JobCard,
-        CategoriesCard
+        CategoriesCard,
+        Carousel,
+        Slide
     },
     data() {
         return {
@@ -127,16 +133,62 @@ export default {
         }
     }
 
-    .category-cards-wrapper {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
+    .VueCarousel-slide {
+        position: relative;
+        transition: .3s cubic-bezier(0.11, 0.7, 0, 1);
 
         .category-card {
-            min-width: rem-calc(100);
-            padding: rem-calc(10);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: rem-calc(10 0);
+        }
 
+        .category-title {
+            display: inline-block;
+            position: relative;
+            padding-bottom: rem-calc(5);
+            transition: color .3s cubic-bezier(0.11, 0.7, 0, 1);
 
+            &::after {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                display: block;
+                width: 100%;
+                height: rem-calc(2);
+                background-color: $red-100;
+                content: '';
+                transform: scale(0);
+                transition: transform .3s cubic-bezier(0.11, 0.7, 0, 1);
+            }
+        }
+
+        &::before {
+            position: absolute;
+            top: 0;
+            left: rem-calc(30);
+            content: '';
+            width: rem-calc(80);
+            height: rem-calc(80);
+            background-color: $white;
+            border-radius: rem-calc(50 140);
+            transition: background-color .3s ease-in-out;
+        }
+
+        &:hover {
+            .category-title {
+                color: $red-100;
+
+                &:after {
+                    transform: scale(1);
+                }
+            }
+
+            &::before {
+                background-color: $white-ter;
+            }
         }
     }
 

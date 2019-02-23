@@ -122,4 +122,8 @@ export default {
         max-width: rem-calc(50);
     }
 
+    .table td {
+        vertical-align: middle;
+    }
+
 </style>

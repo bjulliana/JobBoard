@@ -45,7 +45,7 @@
                             </router-link>
                         </b-dropdown-item>
                         <hr class="dropdown-divider">
-                        <b-dropdown-item value="profile" custom>
+                        <b-dropdown-item value="profile" custom class="is-disabled">
                             <b-icon icon="account-outline" class="has-margin-right-5"></b-icon>
                             Profile
                         </b-dropdown-item>

@@ -35,12 +35,13 @@
                 </b-field>
             </div>
 
-            <b-field label="Job Description">
-                <vue-editor v-model="description"></vue-editor>
-                <!--<b-input name="description" type="textarea" v-model="description"></b-input>-->
-            </b-field>
+            <div class="column">
+                <b-field label="Job Description">
+                    <vue-editor v-model="description"></vue-editor>
+                </b-field>
+            </div>
 
-            <b-field><!-- Label left empty for spacing -->
+            <b-field>
                 <p class="control has-text-right">
                     <button type="submit" class="button is-gradient has-margin-top-30 ">
                         <span>Submit Job</span>
