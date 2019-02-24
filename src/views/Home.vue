@@ -15,13 +15,16 @@
         </div>
         <div class="main-content columns justify-center">
             <div class="column is-12-mobile is-10-tablet is-8-desktop">
-                <div class="has-padding-top-100 has-padding-bottom-100">
+                <div class="has-padding-top-100 has-padding-bottom-50">
                     <h1 class="title has-text-centered has-margin-bottom-80 has-text-weight-light is-uppercase" v-if="['Search'].includes($route.name)">Search
                         <span class="has-text-weight-semibold">Results</span> for: <i>{{$route.query.q}}</i></h1>
                     <h1 class="title has-text-centered has-margin-bottom-80 has-text-weight-light is-uppercase" v-else>Recently <span class="has-text-weight-semibold">Posted</span> Jobs</h1>
                     <router-link v-for="job in jobs" :key="job.id" :to="{ name: 'Job Info', params: {id: job._id, title: job.title}}" class="job-card-wrapper">
                         <job-card :job="job" class="job-card"></job-card>
                     </router-link>
+                </div>
+                <div class="has-text-centered">
+                    <router-link v-if="!['Search'].includes($route.name)" class="button is-gradient is-solid has-margin-auto" :to="{ name: 'All Jobs'}"><span>View All</span></router-link>
                 </div>
             </div>
         </div>
@@ -47,11 +50,8 @@ export default {
     },
     data() {
         return {
-            jobs         : [],
-            jobsQnt      : null,
-            results      : '',
-            categories   : [],
-            categoriesQnt: ''
+            jobs      : [],
+            categories: []
         };
     },
     /* eslint-disable */
@@ -76,8 +76,11 @@ export default {
         fetchData() {
             axios.get(this.request)
                  .then(response => {
-                     this.jobs    = response.data;
-                     this.results = response.data.length;
+                     if (this.$route.name === 'Home') {
+                         this.jobs = response.data.slice(0, 6);
+                     } else {
+                         this.jobs = response.data;
+                     }
                  })
                  .catch(e => {
                      console.log(e);
@@ -87,8 +90,7 @@ export default {
             axios.get(`${storage.urlServer}/categories`)
                  .then(response => {
                      console.log(response.data);
-                     this.categories    = response.data;
-                     this.categoriesQnt = this.categories.length;
+                     this.categories = response.data;
                  })
                  .catch(e => {
                      console.log(e);

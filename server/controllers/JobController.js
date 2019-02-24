@@ -59,7 +59,7 @@ module.exports.searchJob = function (req, res) {
         } else {
             return res.json(jobs);
         }
-    });
+    }).populate('category');
 };
 
 module.exports.deleteJob = function (req, res) {
