@@ -5,27 +5,29 @@
                 <a class="navbar-item" href="/">
                     <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
                 </a>
-                <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="mainNav">
                     <span></span>
                     <span></span>
                     <span></span>
-                </div>
+                </a>
             </div>
 
-            <div id="navbarExampleTransparentExample" class="navbar-menu">
+            <div id="mainNav" class="navbar-menu">
                 <div class="navbar-start">
-                    <a class="navbar-item" href="/">
-                        Home
-                    </a>
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link" href="/">
-                            Docs
-                        </a>
-                    </div>
+                    <router-link class="navbar-item" :to="{ name: 'All Jobs'}">
+                        All Jobs
+                    </router-link>
+                    <router-link v-if="!userLoggedIn" class="navbar-item is-hidden-desktop" :to="{ name: 'Login'}">
+                        Login
+                    </router-link>
+                    <router-link v-if="userLoggedIn" class="navbar-item is-hidden-desktop" :to="{ name: 'New Job'}">
+                        Post Job
+                    </router-link>
+
                 </div>
 
                 <div class="navbar-end">
-                    <div class="navbar-item">
+                    <div class="navbar-item is-hidden-touch">
                         <div class="field is-grouped">
                             <p class="control">
                                 <router-link v-if="!userLoggedIn" class="button is-gradient" :to="{ name: 'Login'}"><span>Login</span></router-link>
@@ -33,33 +35,30 @@
                             </p>
                         </div>
                     </div>
-                    <b-dropdown v-if="userLoggedIn" position="is-bottom-left">
-                        <a class="navbar-item" slot="trigger">
+                    <div v-if="userLoggedIn" class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link toggle-mobile">
                             <span class="has-margin-right-5">{{user.first_name}} {{user.last_name}}</span>
-                            <b-icon icon="chevron-down"></b-icon>
                         </a>
-                        <b-dropdown-item value="categories" has-link>
-                            <router-link :to="{ name: 'Categories'}">
+                        <div class="navbar-dropdown is-hidden-small">
+                            <router-link :to="{ name: 'Categories'}" class="navbar-item">
                                 <b-icon icon="book-outline" class="has-margin-right-5"></b-icon>
                                 Manage Categories
                             </router-link>
-                        </b-dropdown-item>
-                        <b-dropdown-item value="categories" has-link>
-                            <router-link :to="{ name: 'Jobs'}">
+                            <router-link :to="{ name: 'Jobs'}" class="navbar-item">
                                 <b-icon icon="briefcase-outline" class="has-margin-right-5"></b-icon>
                                 Manage Jobs
                             </router-link>
-                        </b-dropdown-item>
-                        <hr class="dropdown-divider">
-                        <b-dropdown-item value="profile" custom class="is-disabled">
-                            <b-icon icon="account-outline" class="has-margin-right-5"></b-icon>
-                            Profile
-                        </b-dropdown-item>
-                        <b-dropdown-item value="logout" href="#" @click="logOut">
-                            <b-icon icon="logout" class="has-margin-right-5"></b-icon>
-                            Logout
-                        </b-dropdown-item>
-                    </b-dropdown>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="navbar-item is-disabled">
+                                <b-icon icon="account-outline" class="has-margin-right-5"></b-icon>
+                                Profile
+                            </a>
+                            <a href="#" class="navbar-item" @click="logOut">
+                                <b-icon icon="logout" class="has-margin-right-5"></b-icon>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -86,6 +85,24 @@ export default {
             this.user = data;
         });
         EventBus.$on('setUserStatus', this.setUserStatus);
+    },
+    mounted() {
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+        if ($navbarBurgers.length > 0) {
+            $navbarBurgers.forEach(el => {
+                el.addEventListener('click', () => {
+                    const target  = el.dataset.target;
+                    const $target = document.getElementById(target);
+                    el.classList.toggle('is-active');
+                    $target.classList.toggle('is-active');
+                });
+            });
+        }
+
+        document.querySelector('.toggle-mobile').addEventListener('click', function () {
+            document.querySelector('.navbar-dropdown').classList.toggle('is-hidden-small');
+        });
     },
     methods: {
         setUserStatus(user) {
@@ -119,6 +136,26 @@ export default {
             .dropdown-content {
                 border-radius: 0;
             }
+        }
+    }
+
+    .navbar-item {
+        &.is-disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+            text-decoration: none;
+
+            &:hover {
+                background-color: transparent;
+            }
+        }
+    }
+
+    .is-hidden-small {
+        display: none;
+
+        @media screen and (min-width: $widescreen) {
+            display: block;
         }
     }
 

@@ -1,9 +1,9 @@
 <template>
     <div class="container has-padding-top-100 has-padding-bottom-100">
-        <h1 class="title has-text-centered has-margin-bottom-80 has-text-weight-light is-uppercase"><span class="has-text-weight-semibold">{{category.title}} </span>Jobs</h1>
+        <h1 class="title has-text-centered has-margin-bottom-80 has-text-weight-light is-uppercase"><span class="has-text-weight-semibold">{{title}} </span>Jobs</h1>
         <div v-if="jobsQnt > 0">
             <router-link v-for="job in jobs" :key="job.id" :to="{ name: 'Job Info', params: {id: job._id, title: job.title}}" class="job-card-wrapper">
-                <job-card :job="job" :category="category" class="job-card"></job-card>
+                <job-card :job="job" class="job-card"></job-card>
             </router-link>
         </div>
         <div v-else>
@@ -27,7 +27,8 @@ export default {
             jobs      : [],
             jobsQnt   : null,
             categoryID: '',
-            category  : []
+            category  : [],
+            title     : ''
         };
     },
     /* eslint-disable */
@@ -40,25 +41,22 @@ export default {
                 this.categoryID = this.$route.params.id;
                 return `${storage.urlServer}/jobs/category/${this.categoryID}`;
             }
+            if (this.$route.name === 'All Jobs') {
+                return `${storage.urlServer}/jobs`;
+            }
         }
     },
     methods   : {
         fetchData() {
             axios.get(this.request)
                  .then(response => {
-                     console.log(response.data);
                      this.jobs    = response.data;
                      this.jobsQnt = response.data.length;
-                     this.getCategory();
-                 })
-                 .catch(e => {
-                     console.log(e);
-                 });
-        },
-        getCategory() {
-            axios.get(`${storage.urlServer}/category/${this.categoryID}`)
-                 .then(response => {
-                     this.category = response.data;
+                     if (this.$route.name === 'Category List') {
+                         this.title = response.data[0].category.title;
+                     } else if (this.$route.name === 'All Jobs') {
+                         this.title = 'All';
+                     }
                  })
                  .catch(e => {
                      console.log(e);

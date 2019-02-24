@@ -15,7 +15,7 @@ module.exports.getJobsbyCategory = function (req, res) {
             return res.json(err);
         }
         return res.json(jobs);
-    });
+    }).populate('category');
 };
 
 module.exports.addJob = function (req, res) {

@@ -15,10 +15,6 @@ import storage from '../storage.js';
 export default {
     name : 'CategoriesCard',
     props: ['category'],
-    data() {
-        return {};
-    }
-
 };
 /* eslint-enable */
 </script>

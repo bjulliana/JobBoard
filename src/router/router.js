@@ -51,7 +51,12 @@ const router = new Router({
                     meta     : {requiresAuth: true}
                 },
                 {
-                    path     : '/newjob',
+                    path     : '/all',
+                    name     : 'All Jobs',
+                    component: () => import('../components/JobList.vue')
+                },
+                {
+                    path     : '/new',
                     name     : 'New Job',
                     component: () => import('../components/JobForm.vue'),
                     meta     : {requiresAuth: true}

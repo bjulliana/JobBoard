@@ -35,7 +35,7 @@
 /* eslint-disable */
 export default {
     name : 'JobCard',
-    props: ['job', 'category']
+    props: ['job']
 };
 </script>
 
