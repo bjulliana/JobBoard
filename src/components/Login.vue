@@ -22,6 +22,9 @@
                 </p>
             </b-field>
         </form>
+        <p>Don't have an account yet?
+            <router-link :to="{ name: 'Register'}">Register Here</router-link>
+        </p>
     </section>
 </template>
 
@@ -32,7 +35,7 @@ import storage from '../storage.js';
 import EventBus from '../event-bus.js';
 
 export default {
-    name   : 'Login',
+    name: 'Login',
     data() {
         return {
             pageTitle: 'Login',
@@ -55,10 +58,12 @@ export default {
                     {withCredentials: true}
                      )
                      .then(response => {
-                         let data  = response.data;
+                         let data = response.data;
                          let token = data.cookie.sid;
+                         let user  = data.user._id;
                          localStorage.setItem('sessionId', token);
-                         this.getUserInfo();
+                         localStorage.setItem('userId', user);
+                         this.getUserInfo(user);
                          this.$router.push({name: 'Home'});
                      })
                      .catch(e => {
@@ -67,15 +72,12 @@ export default {
             };
             login();
         },
-        getUserInfo() {
-            axios.get(`${storage.urlServer}/user`, {withCredentials: true})
+        getUserInfo(user) {
+            axios.get(`${storage.urlServer}/user/${user}`, {withCredentials: true})
                  .then(function (response) {
                      let data = response.data;
-                     if (!localStorage.getItem('userId')) {
-                         let user = data[0];
-                         localStorage.setItem('userId', user._id);
-                         EventBus.$emit('setUserStatus', user);
-                     }
+                     let user = data[0];
+                     EventBus.$emit('setUserStatus', user);
                  })
                  .catch(function (err) {
                      this.logOut();
@@ -88,8 +90,8 @@ export default {
                      EventBus.$emit('setUserStatus');
                      this.$router.push({name: 'Home'});
                  })
-                 .catch(function (err) {
-                     this.logOut();
+                 .catch(function (e) {
+                     console.log(e)
                  });
         }
     }

@@ -31,7 +31,7 @@ export default {
     },
     data() {
         return {
-            search            : null,
+            search : null,
             bgImage: '/images/hero-default.jpg'
         };
     },
@@ -39,7 +39,6 @@ export default {
         search(val) {
             if (val !== null) {
                 if (val.length !== 0) {
-                    console.log(val);
                     this.$router.push({
                         name : 'Search',
                         query: {q: val}
@@ -57,6 +56,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
+    @import "../assets/scss/variables";
+    @import "../assets/scss/functions";
 
     .has-bg-img {
         background-size: cover;
@@ -67,6 +68,12 @@ export default {
         input,
         .input {
             box-shadow: none;
+
+            &.is-large.is-large {
+                font-size: rem-calc(18);
+                height: rem-calc(48);
+                padding-left: rem-calc(50);
+            }
         }
     }
 

@@ -114,7 +114,6 @@ export default {
 
             await axios.get(`${storage.urlServer}/job/${jobID}`)
                        .then(response => {
-                           console.log(response.data);
                            this.job         = response.data;
                            this.title       = this.job.title;
                            this.categoryID  = this.job.category;

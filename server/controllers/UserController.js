@@ -2,19 +2,31 @@ var User         = require('../models/User.js');
 var passport     = require('passport');
 let cookieParser = require('cookie-parser');
 
-module.exports.addUser = function (req, res) {
-    let data   = req.body;
-    let newJob = new User({
-        email     : data.email,
+module.exports.addUser = function (req, res, next) {
+    let data    = req.body;
+    let newUser = new User({
+        username  : data.username,
         password  : data.password,
         first_name: data.first_name,
         last_name : data.last_name
     });
-    newJob.save(function (err, user) {
+    newUser.save(function (err, user) {
         if (err) {
             return res.status(500).send(err);
         }
-        return res.json(user);
+        passport.authenticate('local', (err, user, info) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            req.login(user, err => {
+                res.send({
+                    login  : true,
+                    session: req.session,
+                    cookie : req.cookies,
+                    user   : user
+                });
+            });
+        })(req, res, next);
     });
 };
 
@@ -43,15 +55,6 @@ module.exports.logoutUser = function (req, res) {
     req.logout();
     console.log('logged out');
     return res.send();
-};
-
-module.exports.getCurrentUser = function (req, res) {
-    User.find(function (err, user) {
-        if (err) {
-            return res.json(err);
-        }
-        return res.json(user);
-    });
 };
 
 module.exports.getUser = function (req, res) {

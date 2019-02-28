@@ -22,8 +22,8 @@ mongoose.connect('mongodb://jobuser:job1q2w@ds115963.mlab.com:15963/job_board', 
     () => {
         console.log('Database connection is successful');
     },
-    err => {
-        console.log('Error when connecting to the database' + err);
+    e => {
+        console.log('Error when connecting to the database' + e);
     }
 );
 

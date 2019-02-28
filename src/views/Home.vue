@@ -3,7 +3,7 @@
         <HomeHero></HomeHero>
         <div class="columns justify-center has-background-white">
             <div class="column is-12-mobile is-10-tablet is-8-desktop">
-                <carousel class="columns has-padding-top-100 has-padding-bottom-100 category-cards-wrapper" v-if="!['Search'].includes($route.name)"
+                <carousel class="columns has-padding-bottom-50-touch has-padding-top-50-touch has-padding-top-100 has-padding-bottom-100 category-cards-wrapper" v-if="!['Search'].includes($route.name)"
                           :scrollPerPage="true" :perPageCustom="[[0, 1], [480, 3], [768, 4], [1152, 5]]">
                     <slide v-for="category in categories" :key="category.id">
                         <router-link :to="{ name: 'Category List', params: {id: category._id, title: category.title}}" class="categoy-card-link">
@@ -13,12 +13,12 @@
                 </carousel>
             </div>
         </div>
-        <div class="main-content columns justify-center">
+        <div class="main-content columns justify-center has-padding-bottom-100">
             <div class="column is-12-mobile is-10-tablet is-8-desktop">
-                <div class="has-padding-top-100 has-padding-bottom-50">
-                    <h1 class="title has-text-centered has-margin-bottom-80 has-text-weight-light is-uppercase" v-if="['Search'].includes($route.name)">Search
+                <div class="has-padding-top-50-touch has-padding-top-100 has-padding-bottom-50">
+                    <h1 class="title has-text-centered has-margin-bottom-40-touch has-margin-bottom-80 has-text-weight-light is-uppercase" v-if="['Search'].includes($route.name)">Search
                         <span class="has-text-weight-semibold">Results</span> for: <i>{{$route.query.q}}</i></h1>
-                    <h1 class="title has-text-centered has-margin-bottom-80 has-text-weight-light is-uppercase" v-else>Recently <span class="has-text-weight-semibold">Posted</span> Jobs</h1>
+                    <h1 class="title has-text-centered has-margin-bottom-40-touch has-margin-bottom-80 has-text-weight-light is-uppercase" v-else>Recently <span class="has-text-weight-semibold">Posted</span> Jobs</h1>
                     <router-link v-for="job in jobs" :key="job.id" :to="{ name: 'Job Info', params: {id: job._id, title: job.title}}" class="job-card-wrapper">
                         <job-card :job="job" class="job-card"></job-card>
                     </router-link>
@@ -89,7 +89,6 @@ export default {
         fetchCategories() {
             axios.get(`${storage.urlServer}/categories`)
                  .then(response => {
-                     console.log(response.data);
                      this.categories = response.data;
                  })
                  .catch(e => {
@@ -136,7 +135,7 @@ export default {
     }
 
     .VueCarousel-slide {
-        position: relative;
+        /*position: relative;*/
         transition: .3s cubic-bezier(0.11, 0.7, 0, 1);
 
         .category-card {
@@ -145,6 +144,23 @@ export default {
             justify-content: center;
             align-items: center;
             padding: rem-calc(10 0);
+
+            .category-icon-wrapper {
+                position: relative;
+
+                &::before {
+                    position: absolute;
+                    top: rem-calc(-10);
+                    left: rem-calc(-30);
+                    content: '';
+                    width: rem-calc(80);
+                    height: rem-calc(80);
+                    background-color: $white;
+                    border-radius: rem-calc(50 140);
+                    transition: background-color .3s ease-in-out;
+                    z-index: -1;
+                }
+            }
         }
 
         .category-title {
@@ -167,18 +183,6 @@ export default {
             }
         }
 
-        &::before {
-            position: absolute;
-            top: 0;
-            left: rem-calc(30);
-            content: '';
-            width: rem-calc(80);
-            height: rem-calc(80);
-            background-color: $white;
-            border-radius: rem-calc(50 140);
-            transition: background-color .3s ease-in-out;
-        }
-
         &:hover {
             .category-title {
                 color: $red-100;
@@ -188,8 +192,10 @@ export default {
                 }
             }
 
-            &::before {
-                background-color: $white-ter;
+            .category-icon-wrapper {
+                &::before {
+                    background-color: $white-ter;
+                }
             }
         }
     }

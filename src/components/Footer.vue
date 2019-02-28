@@ -2,7 +2,7 @@
     <footer class="footer">
         <div class="content has-text-centered">
             <p>
-                <strong>Job Board</strong> by <a href="http://www.jullianabauer.com">Julliana Bauer</a>.
+                <strong>ui.jobs</strong> by <a href="http://www.jullianabauer.com">Julliana Bauer</a>.
             </p>
         </div>
     </footer>
@@ -19,6 +19,7 @@ export default {
 @import "../assets/scss/functions";
 
     footer {
-        padding: rem-calc(48 24);
+        padding: rem-calc(24);
+        background-color: $white-ter;
     }
 </style>

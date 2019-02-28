@@ -4,19 +4,26 @@
             :data="jobs"
             :hoverable="isHoverable"
             :mobile-cards="hasMobileCards"
-            :loading="isLoading">
+            :loading="isLoading"
+            :paginated="isPaginated"
+            :per-page="perPage"
+            :current-page.sync="currentPage">
 
             <template slot-scope="props">
 
-                <b-table-column field="id" label="Date Posted">
-                    {{ updateDate(props.row.createdAt) }}
+                <b-table-column field="createdAt" label="Date Posted" sortable :custom-sort="sortByDate">
+                    {{new Date(props.row.createdAt).toLocaleDateString()}}
                 </b-table-column>
 
-                <b-table-column field="title" label="Title">
+                <b-table-column field="title" label="Title" sortable>
                     <router-link :to="{ name: 'Job Info', params: {id: props.row._id, title: props.row.title}}">{{ props.row.title }}</router-link>
                 </b-table-column>
 
-                <b-table-column field="title" label="Category">
+                <b-table-column field="type" label="Type" sortable>
+                    {{ props.row.type }}
+                </b-table-column>
+
+                <b-table-column field="title" label="Category" sortable>
                     <router-link :to="{ name: 'Categories'}">{{ props.row.category.title }}</router-link>
                 </b-table-column>
 
@@ -67,7 +74,11 @@ export default {
             isHoverable   : true,
             hasMobileCards: true,
             pageTitle     : 'Jobs Manager',
-            isLoading     : true
+            isLoading     : true,
+            isPaginated   : true,
+            sort          : 'asc',
+            currentPage   : 1,
+            perPage       : 10
         };
     },
     created() {
@@ -75,6 +86,13 @@ export default {
         this.$emit('title-change', this.pageTitle);
     },
     methods: {
+        sortByDate(a, b, isAsc) {
+            if (isAsc) {
+                return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+            } else {
+                return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+            }
+        },
         fetchJobs() {
             axios.get(`${storage.urlServer}/jobs`)
                  .then(response => {

@@ -136,8 +136,6 @@ export default {
         };
     },
     created() {
-        console.log(this.$route.name);
-
         if (this.$route.name === 'Edit Job') {
             this.jobID = this.$route.params.id;
             this.fetchJob();
@@ -157,7 +155,6 @@ export default {
         fetchCategories() {
             axios.get(`${storage.urlServer}/categories`)
                  .then(response => {
-                     console.log(response.data);
                      this.categories = response.data;
                  })
                  .catch(e => {

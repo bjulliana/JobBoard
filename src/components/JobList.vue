@@ -1,14 +1,20 @@
 <template>
-    <div class="container has-padding-top-100 has-padding-bottom-100">
-        <h1 class="title has-text-centered has-margin-bottom-80 has-text-weight-light is-uppercase"><span class="has-text-weight-semibold">{{title}} </span>Jobs</h1>
+    <div class="container has-padding-top-80-touch has-padding-top-100 has-padding-bottom-100">
         <div v-if="jobsQnt > 0">
-            <router-link v-for="job in jobs" :key="job.id" :to="{ name: 'Job Info', params: {id: job._id, title: job.title}}" class="job-card-wrapper">
+            <router-link v-for="job in paginatedJobs" :key="job.id" :to="{ name: 'Job Info', params: {id: job._id, title: job.title}}" class="job-card-wrapper">
                 <job-card :job="job" class="job-card"></job-card>
             </router-link>
         </div>
         <div v-else>
             <p class="has-text-centered is-italic">No Jobs in this category</p>
         </div>
+        <b-pagination
+            v-if="['All Jobs', 'Category List'].includes($route.name)"
+            :total="jobsQnt"
+            :current.sync="current"
+            :per-page="perPage"
+        >
+        </b-pagination>
     </div>
 </template>
 
@@ -28,12 +34,17 @@ export default {
             jobsQnt   : null,
             categoryID: '',
             category  : [],
-            title     : ''
+            title     : '',
+            current   : 1,
+            perPage   : 5
         };
     },
     /* eslint-disable */
     created() {
         this.fetchData();
+    },
+    watch     : {
+        $route: 'fetchData'
     },
     computed  : {
         request() {
@@ -44,6 +55,10 @@ export default {
             if (this.$route.name === 'All Jobs') {
                 return `${storage.urlServer}/jobs`;
             }
+        },
+        paginatedJobs() {
+            let page_number = this.current - 1;
+            return this.jobs.slice(page_number * this.perPage, (page_number + 1) * this.perPage);
         }
     },
     methods   : {
@@ -54,8 +69,10 @@ export default {
                      this.jobsQnt = response.data.length;
                      if (this.$route.name === 'Category List') {
                          this.title = response.data[0].category.title;
+                         this.$emit('title-change', this.title  + ' Jobs');
                      } else if (this.$route.name === 'All Jobs') {
                          this.title = 'All';
+                         this.$emit('title-change', this.title + ' Jobs');
                      }
                  })
                  .catch(e => {

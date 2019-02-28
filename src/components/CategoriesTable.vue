@@ -79,7 +79,6 @@ export default {
         fetchCategories() {
             axios.get(`${storage.urlServer}/categories`)
                  .then(response => {
-                     console.log(response.data);
                      this.categories = response.data;
                      this.edit       = false;
                  })

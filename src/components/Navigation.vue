@@ -3,7 +3,7 @@
         <nav class="navbar container">
             <div class="navbar-brand">
                 <a class="navbar-item" href="/">
-                    <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+                    <img src="/images/logo.svg" alt="ui.jobs" class="logo">
                 </a>
                 <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="mainNav">
                     <span></span>
@@ -14,6 +14,9 @@
 
             <div id="mainNav" class="navbar-menu">
                 <div class="navbar-start">
+                    <router-link class="navbar-item" :to="{ name: 'Home'}">
+                        Home
+                    </router-link>
                     <router-link class="navbar-item" :to="{ name: 'All Jobs'}">
                         All Jobs
                     </router-link>
@@ -81,13 +84,13 @@ export default {
     },
     created() {
         EventBus.$on('userData', data => {
-            console.log(data);
             this.user = data;
         });
         EventBus.$on('setUserStatus', this.setUserStatus);
     },
     mounted() {
-        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+        let $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0),
+            toggleMobile   = document.querySelector('.toggle-mobile');
 
         if ($navbarBurgers.length > 0) {
             $navbarBurgers.forEach(el => {
@@ -100,9 +103,11 @@ export default {
             });
         }
 
-        document.querySelector('.toggle-mobile').addEventListener('click', function () {
-            document.querySelector('.navbar-dropdown').classList.toggle('is-hidden-small');
-        });
+        if (toggleMobile) {
+            toggleMobile.addEventListener('click', function () {
+                document.querySelector('.navbar-dropdown').classList.toggle('is-hidden-small');
+            });
+        }
     },
     methods: {
         setUserStatus(user) {
@@ -116,8 +121,8 @@ export default {
                      EventBus.$emit('setUserStatus');
                      this.$router.push({name: 'Home'});
                  })
-                 .catch(function (err) {
-                     console.log(err);
+                 .catch(function (e) {
+                     console.log(e);
                  });
         }
     }
@@ -127,6 +132,10 @@ export default {
 <style lang="scss">
     @import "../assets/scss/variables";
     @import "../assets/scss/functions";
+
+    .logo {
+        min-width: rem-calc(130);
+    }
 
     .dropdown {
 
