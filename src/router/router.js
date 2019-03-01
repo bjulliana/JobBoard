@@ -5,7 +5,10 @@ import DefaultPage from '../views/DefaultPage.vue';
 
 Vue.use(Router);
 
-export default new Router({
+const accessToken = localStorage.getItem('sessionId');
+const accessUser  = localStorage.getItem('userId');
+
+const router = new Router({
     mode  : 'history',
     base  : process.env.BASE_URL,
     routes: [
@@ -15,19 +18,85 @@ export default new Router({
             component: Home
         },
         {
-            path     : '/index',
+            name     : 'Search',
+            path     : '/search',
+            component: Home,
+            props    : route => ({query: route.query.q})
+        },
+        {
+            path     : '',
             component: DefaultPage,
+            props    : true,
             children : [
                 {
-                    path     : 'newjob',
+                    path     : '/register',
+                    name     : 'Register',
+                    component: () => import('../components/Register.vue')
+                },
+                {
+                    path     : '/login',
+                    name     : 'Login',
+                    component: () => import('../components/Login.vue')
+                },
+                {
+                    path     : '/categories',
+                    name     : 'Categories',
+                    component: () => import('../components/Categories.vue'),
+                    meta     : {requiresAuth: true}
+                },
+                {
+                    path     : '/jobs',
+                    name     : 'Jobs',
+                    component: () => import('../components/JobsTable.vue'),
+                    meta     : {requiresAuth: true}
+                },
+                {
+                    path     : '/all',
+                    name     : 'All Jobs',
+                    component: () => import('../components/JobList.vue')
+                },
+                {
+                    path     : '/new',
                     name     : 'New Job',
                     component: () => import('../components/JobForm.vue'),
-                    meta     : {
-                        title   : 'Add New Job',
-                        subtitle: 'Fill the Form Below to Add a New Job Posting'
-                    }
+                    meta     : {requiresAuth: true}
+                },
+                {
+                    path     : '/edit/:id',
+                    name     : 'Edit Job',
+                    component: () => import('../components/JobForm.vue'),
+                    meta     : {requiresAuth: true}
+                },
+                {
+                    path     : '/job/:id',
+                    name     : 'Job Info',
+                    component: () => import('../components/JobDetail.vue')
+                },
+                {
+                    path     : '/category/:id',
+                    name     : 'Category List',
+                    component: () => import('../components/JobList.vue')
                 }
             ]
         }
     ]
 });
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (!accessToken || !accessUser) {
+            next({
+                path : '/login',
+                query: {
+                    redirect: to.fullPath
+                }
+            });
+        } else {
+            next();
+        }
+    } else {
+        next();
+    }
+});
+
+export default router;

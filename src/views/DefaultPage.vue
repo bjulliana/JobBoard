@@ -1,23 +1,39 @@
 <template>
     <div class="home">
-        <DefaultHero></DefaultHero>
+        <section class="hero is-light has-bg-img" :style="{ backgroundImage: `url('${bgImage}')`}">
+            <div class="hero-body columns">
+                <div class="container column is-12-mobile is-10-tablet is-8-desktop">
+                    <h1 class="title">{{pageTitle}}</h1>
+                </div>
+            </div>
+        </section>
         <div class="columns">
-            <router-view class="column is-8 has-padding-top-100 has-padding-bottom-100"></router-view>
+            <router-view @title-change="updatePageTitle" class="column is-12-mobile is-10-tablet is-8-desktop has-padding-top-100 has-padding-bottom-100"></router-view>
         </div>
     </div>
 </template>
 
 <script>
-import DefaultHero from '../components/DefaultHero';
 
 export default {
-    name      : 'Home',
-    components: {
-        DefaultHero
+    name   : 'DefaultPage',
+    data() {
+        return {
+            pageTitle: '',
+            bgImage: '/images/hero-default.jpg'
+        };
+    },
+    methods: {
+        updatePageTitle(title) {
+            this.pageTitle = title;
+        }
     }
 };
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+    .hero-body {
+        padding-left: 0;
+        padding-right: 0;
+    }
 </style>

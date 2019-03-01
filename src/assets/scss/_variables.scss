@@ -13,6 +13,7 @@ $grey:         hsl(0, 0%, 48%) !default;
 $grey-light:   hsl(0, 0%, 71%) !default;
 $grey-lighter: hsl(0, 0%, 86%) !default;
 
+$white-darker: hsl(0, 0%, 92%) !default;
 $white-ter:    hsl(0, 0%, 96%) !default;
 $white-bis:    hsl(0, 0%, 98%) !default;
 $white:        hsl(0, 0%, 100%) !default;
@@ -56,6 +57,9 @@ $weight-bold: 700 !default;
 
 // The container horizontal gap, which acts as the offset for breakpoints
 $gap: 32px !default;
+// New Breakpoints
+$mobile-md: 480px !default;
+$mobile-lg: 600px !default;
 // 960, 1152, and 1344 have been chosen because they are divisible by both 12 and 16
 $tablet: 769px !default;
 // 960px container + 4rem
@@ -157,6 +161,26 @@ $size-normal: $size-6 !default;
 $size-medium: $size-5 !default;
 $size-large: $size-4 !default;
 
+$navbar-height: 4.7rem;
+
 .body {
     font: $family-sans-serif;
+}
+
+@mixin mobile-xs {
+    @media screen and (max-width: $mobile-md - 1), print {
+        @content;
+    }
+}
+
+@mixin mobile-md {
+    @media screen and (min-width: $mobile-md), print {
+        @content;
+    }
+}
+
+@mixin mobile-lg {
+    @media screen and (min-width: $mobile-lg), print {
+        @content;
+    }
 }

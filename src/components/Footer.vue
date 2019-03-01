@@ -2,7 +2,7 @@
     <footer class="footer">
         <div class="content has-text-centered">
             <p>
-                <strong>Job Board</strong> by <a href="http://www.jullianabauer.com">Julliana Bauer</a>.
+                <strong>ui.jobs</strong> by <a href="http://www.jullianabauer.com">Julliana Bauer</a>.
             </p>
         </div>
     </footer>
@@ -14,12 +14,12 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "../assets/scss/variables";
 @import "../assets/scss/functions";
 
     footer {
-        padding: rem-calc(48 24);
+        padding: rem-calc(24);
+        background-color: $white-ter;
     }
 </style>
