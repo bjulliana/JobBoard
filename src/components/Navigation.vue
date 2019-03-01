@@ -86,6 +86,7 @@ export default {
         EventBus.$on('userData', data => {
             this.user = data;
         });
+
         EventBus.$on('setUserStatus', this.setUserStatus);
     },
     mounted() {
