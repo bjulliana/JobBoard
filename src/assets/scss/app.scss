@@ -29,7 +29,7 @@ $colors: map-merge($colors, $addColors);
 
 // 4. Provide custom buefy overrides and site styles here
 
-$sans-serif: "Lato", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !default;
+$sans-serif: "Lato", "Helvetica Neue", "Helvetica", "Arial", sans-serif !default;
 
 body {
     font-family: $sans-serif;
