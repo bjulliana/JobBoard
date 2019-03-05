@@ -1,5 +1,6 @@
 <template>
     <section class="container login-form">
+        <h2 class="is-hidden">Login Form</h2>
         <div class="columns justify-center">
             <div class="column is-12-mobile is-10-tablet is-8-desktop">
                 <form

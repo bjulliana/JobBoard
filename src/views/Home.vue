@@ -5,6 +5,7 @@
             <div class="column is-12-mobile is-10-tablet is-8-desktop">
                 <carousel class="columns has-padding-bottom-50-touch has-padding-top-50-touch has-padding-top-100 has-padding-bottom-100 category-cards-wrapper" v-if="!['Search'].includes($route.name)"
                           :scrollPerPage="true" :perPageCustom="[[0, 1], [480, 3], [768, 4], [1152, 5]]">
+                    <h2 class="is-hidden">Categories List</h2>
                     <slide v-for="category in categories" :key="category.id">
                         <router-link :to="{ name: 'Category List', params: {id: category._id, title: category.title}}" class="categoy-card-link">
                             <categories-card :category="category" class="category-card"></categories-card>
@@ -18,7 +19,7 @@
                 <div class="has-padding-top-50-touch has-padding-top-100 has-padding-bottom-50">
                     <h1 class="title has-text-centered has-margin-bottom-40-touch has-margin-bottom-80 has-text-weight-light is-uppercase" v-if="['Search'].includes($route.name)">Search
                         <span class="has-text-weight-semibold">Results</span> for: <i>{{$route.query.q}}</i></h1>
-                    <h1 class="title has-text-centered has-margin-bottom-40-touch has-margin-bottom-80 has-text-weight-light is-uppercase" v-else>Recently <span class="has-text-weight-semibold">Posted</span> Jobs</h1>
+                    <h2 class="title has-text-centered has-margin-bottom-40-touch has-margin-bottom-80 has-text-weight-light is-uppercase" v-else>Recently <span class="has-text-weight-semibold">Posted</span> Jobs</h2>
                     <router-link v-for="job in jobs" :key="job.id" :to="{ name: 'Job Info', params: {id: job._id, title: job.title}}" class="job-card-wrapper">
                         <job-card :job="job" class="job-card"></job-card>
                     </router-link>

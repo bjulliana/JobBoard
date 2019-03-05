@@ -1,6 +1,7 @@
 <template>
     <header class="container-header">
         <nav class="navbar container">
+            <h2 class="is-hidden">Main Navigation</h2>
             <div class="navbar-brand">
                 <a class="navbar-item" href="/">
                     <img src="/images/logo.svg" alt="ui.jobs" class="logo">

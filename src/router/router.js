@@ -9,7 +9,6 @@ const accessToken = localStorage.getItem('sessionId');
 const accessUser  = localStorage.getItem('userId');
 
 const router = new Router({
-    mode  : 'history',
     base  : process.env.BASE_URL,
     routes: [
         {

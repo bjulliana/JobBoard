@@ -1,5 +1,6 @@
 <template>
     <section class="container register-form">
+        <h2 class="is-hidden">Registration Form</h2>
         <form
             @submit.prevent="register"
             method="post"

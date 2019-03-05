@@ -1,10 +1,10 @@
 <template>
     <div class="box">
-        <article class="media">
+        <div class="media">
             <div class="media-content columns align-items-center is-marginless is-flex-mobile-md">
                 <div class="column is-6-mobile-md is-flex align-items-center">
                     <figure class="image has-margin-right-40 job-icon-wrapper">
-                        <img class="job-icon" :src="`/images/categories/${job.category._id}.svg `">
+                        <img class="job-icon" :src="`/images/categories/${job.category._id}.svg `" :alt="job.category.title">
                     </figure>
                     <div>
                         <p class="is-marginless"><strong>{{job.title}}</strong></p>
@@ -27,7 +27,7 @@
                     </div>
                 </div>
             </div>
-        </article>
+        </div>
     </div>
 </template>
 
