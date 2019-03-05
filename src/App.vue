@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+        <h1 class="is-hidden">ui.job - Job Board</h1>
         <Navigation />
         <router-view />
         <Footer />

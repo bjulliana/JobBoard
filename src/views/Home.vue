@@ -5,6 +5,7 @@
             <div class="column is-12-mobile is-10-tablet is-8-desktop">
                 <carousel class="columns has-padding-bottom-50-touch has-padding-top-50-touch has-padding-top-100 has-padding-bottom-100 category-cards-wrapper" v-if="!['Search'].includes($route.name)"
                           :scrollPerPage="true" :perPageCustom="[[0, 1], [480, 3], [768, 4], [1152, 5]]">
+                    <h2 class="is-hidden">Categories List</h2>
                     <slide v-for="category in categories" :key="category.id">
                         <router-link :to="{ name: 'Category List', params: {id: category._id, title: category.title}}" class="categoy-card-link">
                             <categories-card :category="category" class="category-card"></categories-card>

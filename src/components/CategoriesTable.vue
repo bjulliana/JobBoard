@@ -1,5 +1,6 @@
 <template>
     <section>
+        <h2 class="is-hidden">Categories Table</h2>
         <b-table
             :data="categories"
             :hoverable="isHoverable"
@@ -7,7 +8,7 @@
 
             <template slot-scope="props">
                 <b-table-column field="image" label="Image" centered>
-                    <img class="category-image" :src="`/images/categories/${props.row._id}.svg`">
+                    <img class="category-image" :src="`/images/categories/${props.row._id}.svg`" :alt="props.row.title">
                 </b-table-column>
 
                 <b-table-column field="id" label="ID">
@@ -34,7 +35,7 @@
             </template>
 
             <template slot="empty">
-                <section class="section">
+                <div class="section">
                     <div class="content has-text-grey has-text-centered">
                         <p>
                             <b-icon
@@ -44,7 +45,7 @@
                         </p>
                         <p>No Categories</p>
                     </div>
-                </section>
+                </div>
             </template>
         </b-table>
     </section>

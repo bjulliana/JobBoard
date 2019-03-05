@@ -1,7 +1,7 @@
 <template>
     <div>
         <figure class="category-icon-wrapper image has-margin-auto">
-            <img class="category-icon" :src="`/images/categories/${category._id}.svg `">
+            <img class="category-icon" :src="`/images/categories/${category._id}.svg `" :alt="category.title">
         </figure>
         <p class="has-text-centered has-margin-top-20 category-title">{{category.title}}</p>
     </div>
@@ -14,7 +14,7 @@ import storage from '../storage.js';
 
 export default {
     name : 'CategoriesCard',
-    props: ['category'],
+    props: ['category']
 };
 /* eslint-enable */
 </script>

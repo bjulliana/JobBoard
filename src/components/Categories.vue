@@ -1,5 +1,6 @@
 <template>
     <section class="container">
+        <h2 class="is-hidden">Categories Form</h2>
         <div class="category-form has-margin-bottom-60">
             <form
                 @submit.prevent="addCategory"
